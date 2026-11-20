@@ -1,0 +1,234 @@
+<!doctype html>
+<html lang="he" dir="rtl">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>בדיקת אפליקציית נדל"ן</title>
+<style>
+:root{
+  --bg:#f7f8fa;--surface:#ffffff;--text:#1b1f27;--muted:#5b6472;--border:#e2e5ea;
+  --accent:#2b5bd7;--accent-soft:#e8eefc;--good:#1f8a4c;--good-soft:#e5f5ec;
+  --bad:#c0392b;--bad-soft:#fbeaea;--warn:#b7791f;--warn-soft:#fdf3e1;--code:#f1f3f6;
+}
+@media (prefers-color-scheme: dark){
+  :root:not([data-theme="light"]){
+    --bg:#11141a;--surface:#191d25;--text:#e6e9ef;--muted:#9aa3b2;--border:#2a303b;
+    --accent:#7aa2ff;--accent-soft:#1d2840;--good:#4cc584;--good-soft:#16291f;
+    --bad:#ff7b6e;--bad-soft:#331a19;--warn:#f0b354;--warn-soft:#30261420;--code:#222833;
+  }
+}
+:root[data-theme="dark"]{
+  --bg:#11141a;--surface:#191d25;--text:#e6e9ef;--muted:#9aa3b2;--border:#2a303b;
+  --accent:#7aa2ff;--accent-soft:#1d2840;--good:#4cc584;--good-soft:#16291f;
+  --bad:#ff7b6e;--bad-soft:#331a19;--warn:#f0b354;--warn-soft:#302614;--code:#222833;
+}
+*{box-sizing:border-box}
+body{margin:0;background:var(--bg);color:var(--text);
+  font-family:"Segoe UI","Heebo","Arial Hebrew",Arial,sans-serif;line-height:1.65;font-size:16px}
+.wrap{max-width:980px;margin:0 auto;padding:32px 16px 64px}
+header h1{margin:0 0 6px;font-size:1.9rem}
+header p{margin:0;color:var(--muted)}
+nav{display:flex;gap:8px;flex-wrap:wrap;margin:20px 0 28px}
+nav a{padding:6px 14px;border-radius:999px;background:var(--accent-soft);color:var(--accent);
+  text-decoration:none;font-weight:600;font-size:.92rem}
+h2{font-size:1.45rem;margin:40px 0 12px;padding-bottom:6px;border-bottom:2px solid var(--accent)}
+h3{font-size:1.12rem;margin:26px 0 10px}
+.card{background:var(--surface);border:1px solid var(--border);border-radius:12px;padding:18px 20px;margin:14px 0}
+.verdict{border-inline-start:5px solid var(--accent);font-size:1.05rem}
+.grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(200px,1fr));gap:12px}
+.stat{background:var(--surface);border:1px solid var(--border);border-radius:12px;padding:14px 16px}
+.stat b{display:block;font-size:1.5rem;color:var(--accent)}
+.stat span{color:var(--muted);font-size:.9rem}
+ol,ul{padding-inline-start:22px;margin:8px 0}
+li{margin:4px 0}
+.tbl{overflow-x:auto;margin:12px 0;border:1px solid var(--border);border-radius:10px;background:var(--surface)}
+table{border-collapse:collapse;width:100%;font-size:.92rem}
+th,td{padding:9px 12px;text-align:start;border-bottom:1px solid var(--border);vertical-align:top}
+th{background:var(--code);font-weight:700;white-space:nowrap}
+tr:last-child td{border-bottom:none}
+code{background:var(--code);padding:1px 6px;border-radius:5px;font-size:.85em;direction:ltr;unicode-bidi:embed;font-family:Consolas,monospace}
+.yes{color:var(--good);font-weight:700}.no{color:var(--bad);font-weight:700}.maybe{color:var(--warn);font-weight:700}
+.pill{display:inline-block;padding:1px 10px;border-radius:999px;font-size:.82rem;font-weight:700}
+.p-good{background:var(--good-soft);color:var(--good)}.p-bad{background:var(--bad-soft);color:var(--bad)}.p-warn{background:var(--warn-soft);color:var(--warn)}
+.note{background:var(--warn-soft);border:1px solid var(--border);border-radius:10px;padding:12px 16px;color:var(--text);font-size:.93rem}
+.score{display:flex;align-items:center;gap:12px;margin:8px 0}
+.bar{flex:1;height:10px;background:var(--code);border-radius:99px;overflow:hidden}
+.bar i{display:block;height:100%;background:var(--accent)}
+.score .lbl{min-width:210px}
+footer{margin-top:48px;color:var(--muted);font-size:.85rem;border-top:1px solid var(--border);padding-top:14px}
+@media (max-width:600px){.score{flex-wrap:wrap}.score .lbl{min-width:100%}header h1{font-size:1.5rem}}
+</style>
+</head>
+<body>
+<div class="wrap">
+
+<header>
+  <h1>בדיקת התוכנית: אפליקציית נדל"ן לארה"ב</h1>
+  <p>Next-Gen Real Estate Matchmaking &amp; Analytics App · המסמך של מתן · נבדק ב-20.11.2026 על ידי צוות של 4 סוכנים: תוקף, מקדם, חוקר API ואנליסט עסקי</p>
+</header>
+
+<nav>
+  <a href="#simple">חלק א': בשפה פשוטה</a>
+  <a href="#tech">חלק ב': טכני</a>
+  <a href="#sources">מקורות נתונים</a>
+  <a href="#legal">משפטי</a>
+  <a href="#cost">עלויות</a>
+</nav>
+
+<div class="card verdict">
+  <strong>בקצרה:</strong> את ציוני השכונה אפשר לבנות <span class="yes">בחינם</span> ומותר <span class="yes">למכור</span> אותם.
+  את הבתים שעומדים למכירה <span class="no">אי אפשר להשיג בלי חוזה ותשלום</span>.
+  התוכנית כמו שהיא כתובה לא ישימה. אם בונים בלי תקציב, הכיוון הוא אפליקציה או API שמקבלים כתובת ומחזירים ציון שכונה, ונמכרים כמנוי למתווכים ולאתרי נדל"ן.
+</div>
+
+<!-- ============ PART A ============ -->
+<h2 id="simple">חלק א': בשפה פשוטה</h2>
+
+<h3>מה מתן מציע</h3>
+<ol>
+  <li><strong>מוכר בוחר מתווך כמו באפליקציית היכרויות.</strong> המוכר מעלה את הבית בהסתר, מתווכים שולחים לו הצעות, והוא בוחר אחד.</li>
+  <li><strong>קונים מחפשים בית לפי ציוני שכונה:</strong> בתי ספר, פשיעה, תחבורה ובתי חולים.</li>
+  <li><strong>עורכי דין</strong> שמלווים את העסקה בתוך האפליקציה.</li>
+</ol>
+
+<h3>הבעיות העיקריות</h3>
+<div class="card">
+<ol>
+  <li><strong>אין מאיפה להביא בתים למכירה.</strong> כל הבתים בארה"ב נמצאים במאגר של המתווכים (MLS), ונכנסים אליו רק עם רישיון תיווך וחוזה. להעתיק מ-Zillow אסור. בית המשפט כבר חייב את Zillow לשלם על כל תמונה של מודעה שהשתמשה בה בלי רשות.</li>
+  <li><strong>אין בתוכנית מודל עסקי.</strong> לא כתוב מי משלם. הדרך הרווחית, לקחת אחוז מהעמלה של המתווך, מותרת רק לחברה שהיא בעצמה משרד תיווך עם רישיון.</li>
+  <li><strong>הרעיון כבר קיים.</strong> HomeLight, ‏UpNest, ‏Clever ו-Realtor.com כבר נותנים למתווכים להתחרות על מוכרים. Zillow גובה 40% מהעמלה על כל מוכר שהיא מביאה.</li>
+  <li><strong>חלקים בתוכנית לא חוקיים בחלק מהמדינות:</strong>
+    <ul>
+      <li>כל הקונים מופנים למתווך של המוכר. זה ייצוג כפול, שאסור או מוגבל מאוד בטקסס, פלורידה, קולורדו ועוד כמה מדינות.</li>
+      <li>עורכי דין לא יכולים לנהל כספי נאמנות (escrow) בלי רישיון מיוחד.</li>
+      <li>סינון שכונות לפי פשיעה עלול להיחשב אפליה בדיור.</li>
+    </ul>
+  </li>
+  <li><strong>ארבעה סוגי משתמשים בבת אחת</strong> (מוכרים, מתווכים, קונים ועורכי דין). זה כמעט בלתי אפשרי להתניע.</li>
+  <li><strong>הכסף לא מסתדר.</strong> עסקה מכניסה בערך 3,300 דולר, אבל עולה בערך 4,300 דולר בפרסום להביא אותה. הכסף נכנס רק אחרי חצי שנה עד שנה.</li>
+</ol>
+</div>
+
+<h3>מה כן טוב</h3>
+<div class="grid">
+  <div class="stat"><b>כ-45 מיליארד דולר</b><span>עמלות בצד המוכרים בשנה</span></div>
+  <div class="stat"><b>4.06 מיליון</b><span>בתים שנמכרו ב-2025</span></div>
+  <div class="stat"><b>כ-2.8%</b><span>עמלת צד המוכר, פתוחה למשא ומתן מאז 2024</span></div>
+  <div class="stat"><b>חינם</b><span>נתוני השכונה מהממשלה, ומותר למכור מוצר שבנוי עליהם</span></div>
+</div>
+
+<h3>התשובה לשאלה שלך: בחינם? מותר למכור?</h3>
+<div class="tbl"><table>
+  <tr><th>מה</th><th>אפשר בחינם?</th><th>מותר למכור?</th></tr>
+  <tr><td>ציוני שכונה מנתונים ממשלתיים</td><td class="yes">כן</td><td class="yes">כן</td></tr>
+  <tr><td>בתים למכירה (מודעות)</td><td class="no">לא</td><td class="maybe">רק עם חוזה ותשלום</td></tr>
+  <tr><td>אחוז מעסקאות (דמי הפניה)</td><td>—</td><td class="maybe">רק עם רישיון תיווך</td></tr>
+  <tr><td>מנוי חודשי קבוע למתווכים</td><td>—</td><td class="yes">כן</td></tr>
+</table></div>
+
+<h3>ציון הצוות</h3>
+<div class="card">
+  <div class="score"><span class="lbl">התוכנית כמו שהיא כתובה</span><div class="bar"><i style="width:20%"></i></div><b>2/10</b></div>
+  <div class="score"><span class="lbl">גרסה מצומצמת: משרד תיווך בפלורידה</span><div class="bar"><i style="width:50%"></i></div><b>5/10</b></div>
+  <p style="margin:10px 0 0;color:var(--muted)">הגרסה המצומצמת דורשת כמיליון דולר. ההמלצה לבנייה בלי תקציב: ציוני שכונה בלבד, שנמכרים כמנוי או כ-API.</p>
+</div>
+
+<h3>מה אמר כל סוכן</h3>
+<div class="tbl"><table>
+  <tr><th>סוכן</th><th>שורה תחתונה</th></tr>
+  <tr><td><span class="pill p-bad">תוקף</span></td><td>כפי שהוא כתוב היום, זה מוצר בלי מלאי, בלי מודל הכנסה חוקי מוכח ועם זרימת dual agency שאסורה בחלק ממדינות הליבה.</td></tr>
+  <tr><td><span class="pill p-good">מקדם</span></td><td>כדאי לבנות, אבל רק כבית תיווך להפניות ברישיון, ב"זירת סוכנים" לפני העלייה לשוק, במטרו אחת. ציוני השכונה הם כלי משיכה, לא המוצר עצמו.</td></tr>
+  <tr><td><span class="pill p-warn">אנליסט עסקי</span></td><td>לשנות כיוון (PIVOT). לא לבנות את ה-PRD המלא. לבחור ברוקראז' במדינה אחת, או מוצר SaaS במנוי לסוכנים.</td></tr>
+  <tr><td><span class="pill p-good">חוקר API</span></td><td>את נתוני השכונה אפשר להשיג בחינם ומותר למכור אותם. למודעות אין מקור חינמי חוקי.</td></tr>
+</table></div>
+
+<!-- ============ PART B ============ -->
+<h2 id="tech">חלק ב': טכני</h2>
+
+<h3 id="sources">1. מקורות נתונים חינמיים שמותר להשתמש בהם מסחרית</h3>
+<p class="note">נתונים של הממשל הפדרלי הם נחלת הכלל לפי סעיף 17 USC 105. הכלל הזה <strong>לא</strong> חל על נתונים של מדינות, מחוזות וערים, ולכל אחד מהם רישיון משלו.</p>
+<div class="tbl"><table>
+  <tr><th>שכבה</th><th>מקור</th><th>גישה</th><th>רזולוציה</th><th>הערות</th></tr>
+  <tr><td>איתור כתובת</td><td>Census Geocoder</td><td>REST, עד 10K כתובות ב-batch, בלי מפתח</td><td>block / tract</td><td></td></tr>
+  <tr><td>חינוך</td><td>NCES EDGE, ‏CCD</td><td>ArcGIS REST, בלי מפתח</td><td>נקודה, מחוז</td><td>עדיף ישירות מ-NCES ולא דרך Urban Institute</td></tr>
+  <tr><td>פשיעה (ארצי)</td><td>FBI Crime Data Explorer<br><code>api.usa.gov/crime/fbi/cde</code></td><td>מפתח חינמי של api.data.gov</td><td>סוכנות משטרה (ORI)</td><td>NIBRS מכסה 77% מהסוכנויות. לא מתאים לרמת שכונה</td></tr>
+  <tr><td>פשיעה (עירוני)</td><td>Socrata: NYC, Chicago, SF, Seattle, LA</td><td>app token (חובה ב-SODA3)</td><td>נקודה, בלוק</td><td>סכמה ורישיון שונים בכל עיר</td></tr>
+  <tr><td>הצפות</td><td>FEMA NFHL<br><code>hazards.fema.gov/arcgis/.../NFHL/MapServer</code></td><td>בלי מפתח</td><td>פוליגון</td><td></td></tr>
+  <tr><td>סיכוני טבע</td><td>FEMA NRI v1.20, ‏USFS Wildfire Risk</td><td>הורדת קבצים</td><td>tract</td><td>ב-NRI חובה disclaimer: "not endorsed by FEMA"</td></tr>
+  <tr><td>סביבה</td><td>EPA Envirofacts, ‏AirNow</td><td>REST, מפתח חינמי</td><td>נקודה, ZIP</td><td>EJScreen הוסר בפברואר 2025</td></tr>
+  <tr><td>הליכתיות</td><td>EPA National Walkability Index</td><td>קבצים (גרסת 2021)</td><td>block group</td><td>לשמור עותק מקומי</td></tr>
+  <tr><td>תחבורה</td><td>Mobility Database (GTFS), ‏OTP או OSRM ב-self-host</td><td>OAuth, בחינם</td><td>—</td><td>לבדוק רישיון לכל feed. ה-MTA עשוי לגבות מאפליקציה מסחרית</td></tr>
+  <tr><td>בריאות</td><td>CMS Provider Data, ‏NPPES NPI v2.1, ‏HRSA</td><td>בלי מפתח</td><td>נקודה</td><td>ב-NPI עדיף bulk file</td></tr>
+  <tr><td>מקומות ושירותים</td><td>Overture Places (כ-64M)</td><td>Parquet חודשי</td><td>נקודה</td><td>CDLA-Permissive-2.0, רק attribution</td></tr>
+  <tr><td>כלכלה</td><td>Census ACS 5-yr, ‏HUD User, ‏BLS v2, ‏FHFA HPI</td><td>מפתחות חינמיים</td><td>tract / ZIP</td><td></td></tr>
+  <tr><td>רישיונות מתווכים</td><td>CA DRE, ‏FL DBPR, ‏TX TREC</td><td>Excel, CSV</td><td>—</td><td>TREC מושבת עד 15.12.2026</td></tr>
+</table></div>
+
+<h3>2. בתשלום או אסור</h3>
+<div class="tbl"><table>
+  <tr><th>מקור</th><th>מצב</th><th>למה</th></tr>
+  <tr><td>MLS (Bridge, Trestle, RESO Web API)</td><td><span class="pill p-warn">חוזה</span></td><td>חוזה IDX/VOW עם כל MLS בנפרד, ורק דרך ברוקר</td></tr>
+  <tr><td>Scraping מ-Zillow, Redfin, Realtor.com</td><td><span class="pill p-bad">אסור</span></td><td>מפר את תנאי השימוש. VHT v. Zillow: פיצויים לכל תמונה</td></tr>
+  <tr><td>GreatSchools</td><td><span class="pill p-warn">בתשלום</span></td><td>דירוג 1-10 רק ב-Data License</td></tr>
+  <tr><td>Google Maps / Places</td><td><span class="pill p-warn">מוגבל</span></td><td>cache של קואורדינטות עד 30 יום, ואסור לבנות DB</td></tr>
+  <tr><td>שרתי המפות של OpenStreetMap</td><td><span class="pill p-bad">אסור מסחרית</span></td><td>להריץ Protomaps או OpenMapTiles בעצמכם</td></tr>
+  <tr><td>OSM כמסד נתונים</td><td><span class="pill p-warn">share-alike</span></td><td>ODbL מחייב לפתוח DB נגזר. עדיף Overture</td></tr>
+  <tr><td>ATTOM, Regrid, RentCast</td><td><span class="pill p-warn">בתשלום</span></td><td>מ-500 דולר בחודש. ל-RentCast ול-Regrid יש free tier קטן</td></tr>
+  <tr><td>NMLS</td><td><span class="pill p-bad">אסור scraping</span></td><td>B2B בלבד</td></tr>
+  <tr><td>נתוני טאבו ושומה מחוזיים</td><td><span class="pill p-warn">משתנה</span></td><td>בקליפורניה המחוז רשאי לגבות דמי רישיון על שימוש מסחרי</td></tr>
+</table></div>
+
+<h3>3. ארכיטקטורה מומלצת ל-MVP חינמי</h3>
+<div class="card"><ol>
+  <li><strong>קליטה:</strong> משימות ETL שבועיות או חודשיות. שומרים snapshot עם גרסה לכל dataset, כי נתונים פדרליים נעלמים.</li>
+  <li><strong>אחסון:</strong> PostgreSQL עם PostGIS. מפתח אחיד ברמת census tract או block group.</li>
+  <li><strong>ציונים:</strong> חישוב מראש לכל tract, עם נרמול לאחוזון בתוך המטרו ולא ארצי.</li>
+  <li><strong>ציון פשיעה:</strong> רק בערים עם נתוני Socrata. בכל השאר מציגים "אין נתונים", ולא אומדן מה-FBI.</li>
+  <li><strong>API:</strong> <code>GET /score?address=</code> מחזיר ציונים, פירוק לרכיבים, ואת המקור והגרסה של כל נתון.</li>
+  <li><strong>מפות:</strong> MapLibre עם Protomaps שמארחים בעצמכם.</li>
+  <li><strong>Metadata:</strong> רישיון ו-attribution לכל dataset, ודף attribution באפליקציה.</li>
+</ol></div>
+
+<h3 id="legal">4. דרישות משפטיות</h3>
+<div class="tbl"><table>
+  <tr><th>נושא</th><th>מה צריך</th></tr>
+  <tr><td>מנוי קבוע שלא תלוי בעסקה</td><td class="yes">אין צורך ברישיון תיווך</td></tr>
+  <tr><td>אחוז מעמלה או דמי הפניה</td><td>רק כברוקר מורשה (RESPA סעיף 8). ה-CFPB תבע את Rocket ב-2024 על מודל כזה</td></tr>
+  <tr><td>Fair Housing</td><td>מציגים את אותם נתונים לכל המשתמשים, בלי דמוגרפיה מוגנת (גזע, דת, משפחה). לא מאפשרים סינון לפי פשיעה, רק הצגה. מכתב ה-HUD מאפריל 2026 הוא הנחיה ולא חוק</td></tr>
+  <tr><td>ייצוג כפול</td><td>לתת לקונה לבחור מתווך משלו. ייצוג כפול אסור או מוגבל ב-TX, ‏FL, ‏CO ועוד</td></tr>
+  <tr><td>Escrow</td><td>להוריד מהתוכנית. נדרש רישיון נפרד, למשל DFPI בקליפורניה</td></tr>
+  <tr><td>פרטיות</td><td>CCPA וחוקי הפרטיות של המדינות</td></tr>
+  <tr><td>Disclaimers</td><td>FEMA NRI, ‏AirNow (נתונים ראשוניים)</td></tr>
+</table></div>
+
+<h3 id="cost">5. עלויות</h3>
+<div class="tbl"><table>
+  <tr><th>גרסה</th><th>צוות</th><th>זמן</th><th>עלות</th></tr>
+  <tr><td>ציוני שכונה בלבד, מטרו אחת</td><td>1–2 מפתחים</td><td>2–3 חודשים</td><td>כמעט רק אחסון. הנתונים בחינם</td></tr>
+  <tr><td>שידוך מוכרים ומתווכים במדינה אחת</td><td>3–4 מפתחים, PM ו-UX, ועוד ברוקר מורשה</td><td>4–6 חודשים</td><td>350–600 אלף דולר, ועוד 2–5 אלף דולר בחודש לברוקר</td></tr>
+  <tr><td>התוכנית המלאה</td><td>8–12 אנשים</td><td>12–18 חודשים</td><td>2–3.5 מיליון דולר</td></tr>
+</table></div>
+
+<h3>6. כלכלה של עסקה אחת (מודל הפניות, בית ב-400 אלף דולר)</h3>
+<div class="tbl"><table>
+  <tr><th></th><th>פסימי</th><th>בסיס</th><th>אופטימי</th></tr>
+  <tr><td>הכנסה לעסקה סגורה</td><td>2,500$</td><td>3,300$</td><td>4,200$</td></tr>
+  <tr><td>המרה מליד לעסקה</td><td>3%</td><td>7%</td><td>12%</td></tr>
+  <tr><td>עלות להשגת עסקה סגורה (CAC)</td><td>כ-16,700$</td><td>כ-4,300$</td><td>כ-1,250$</td></tr>
+  <tr><td>זמן מליד לסגירה</td><td>9–12 חודשים</td><td>6–9 חודשים</td><td>4–6 חודשים</td></tr>
+</table></div>
+
+<h3>7. אזהרות</h3>
+<ul>
+  <li><strong>נתונים פדרליים נעלמים.</strong> EJScreen ו-Future Risk Index הוסרו ב-2025. צריך לשמור עותק מקומי.</li>
+  <li><strong>כיסוי הפשיעה של ה-FBI חלקי.</strong> אין להשוות בין ערים בלי נרמול.</li>
+  <li><strong>לכל עיר ולכל feed של תחבורה יש רישיון משלו.</strong> יש לשמור אותו ב-metadata.</li>
+  <li><strong>הגנת HUD לנתוני פשיעה</strong> נשענת על מכתב מדיניות ולא על חוק, והיא עלולה להתהפך.</li>
+</ul>
+
+<footer>
+  זה לא ייעוץ משפטי. לפני שמוכרים, כדאי שעורך דין אמריקאי לנדל"ן יעבור על המודל. הנתונים נכונים ל-20.11.2026, לפי חיפוש רשת של סוכני המחקר.
+</footer>
+</div>
+</body>
+</html>
